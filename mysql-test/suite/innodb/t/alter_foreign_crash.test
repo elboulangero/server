@@ -9,6 +9,7 @@
 --echo #
 
 call mtr.add_suppression("InnoDB: Failed to load table");
+call mtr.add_suppression("InnoDB: Table .* does not exist");
 
 create database bug;
 use bug;
