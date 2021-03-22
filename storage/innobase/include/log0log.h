@@ -37,6 +37,7 @@ Created 12/9/1995 Heikki Tuuri
 #include "log0types.h"
 #include "os0file.h"
 #include "span.h"
+#include "string_view.h"
 #include "my_atomic_wrapper.h"
 #include <vector>
 #include <string>
@@ -428,7 +429,7 @@ public:
   dberr_t open(bool read_only) noexcept;
   bool is_opened() const noexcept;
 
-  const std::string &get_path() const noexcept { return m_path; }
+  string_view get_path() const noexcept { return m_path; }
 
   dberr_t rename(std::string new_path) noexcept;
   dberr_t close() noexcept;
@@ -525,7 +526,7 @@ public:
     /** writes header */
     void write_header_durable(lsn_t lsn);
     /** opens log file which must be closed prior this call */
-    dberr_t rename(std::string path) { return fd.rename(path); }
+    dberr_t rename(std::string path) { return fd.rename(std::move(path)); }
     /** reads buffer from log file
     @param[in]	offset		offset in log file
     @param[in]	buf		buffer where to read */
